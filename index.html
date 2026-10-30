@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="theme-color" content="#050807">
+
+<title>GHOSTCORE PRO</title>
+
+<style>
+
+:root{--bg:#050807;--panel:#0b1410;--green:#35ff86;--muted:#83a18e;--line:#183d2a}
+
+*{box-sizing:border-box}
+
+body{margin:0;background:var(--bg);color:#e8fff0;font-family:Arial,sans-serif}
+
+header{padding:22px 18px;background:#07110b;border-bottom:1px solid var(--line)}
+
+.logo{font-size:23px;font-weight:900;letter-spacing:3px;color:var(--green)}
+
+.sub{font-size:10px;color:var(--muted);letter-spacing:3px;margin-top:6px}
+
+nav{display:flex;gap:8px;overflow-x:auto;padding:12px;background:#080e0a;position:sticky;top:0;z-index:5}
+
+nav button{white-space:nowrap;background:#101c14;color:#b8d8c3;border:1px solid var(--line);padding:10px 13px;border-radius:7px}
+
+nav button.active{background:#123522;color:var(--green);border-color:var(--green)}
+
+main{padding:16px;max-width:900px;margin:auto}
+
+.page{display:none}.page.active{display:block}
+
+h2{color:var(--green);font-size:19px}
+
+h3{font-size:14px;color:var(--green)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+
+.stat{background:#0b1710;border:1px solid var(--line);padding:15px;border-radius:10px}
+
+.stat strong{display:block;color:var(--green);font-size:22px;margin-bottom:6px}
+
+p,.muted{color:var(--muted);line-height:1.5;font-size:13px}
+
+input,textarea,select{width:100%;padding:12px;background:#050b07;border:1px solid var(--line);border-radius:7px;color:white;margin:7px 0;font-size:14px}
+
+button.action{background:#123522;color:var(--green);border:1px solid #267447;padding:11px 14px;border-radius:7px;margin:5px 4px 5px 0}
+
+button.action:active{background:#205c38}
+
+pre,.output{white-space:pre-wrap;overflow-wrap:anywhere;background:#030704;border:1px solid var(--line);padding:12px;border-radius:8px;color:#9dffba;font-size:12px;min-height:40px}
+
+.tag{color:var(--green);font-size:11px;letter-spacing:2px}
+
+footer{text-align:center;padding:30px;color:#557260;font-size:11px}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+ <div class="logo">GHOSTCORE PRO</div>
+
+ <div class="sub">BLACK EDITION // CYBERSECURITY SUITE</div>
+
+</header>
+
+<nav id="nav">
+
+ <button class="active" data-page="home">Accueil</button>
+
+ <button data-page="terminal">Terminal</button>
+
+ <button data-page="dns">Network</button>
+
+ <button data-page="url">URL Intel</button>
+
+ <button data-page="osint">OSINT</button>
+
+ <button data-page="crypto">Crypto</button>
+
+ <button data-page="password">Password Lab</button>
+
+ <button data-page="forensics">Forensics</button>
+
+ <button data-page="nfc">NFC Academy</button>
+
+ <button data-page="lab">Cyber Lab</button>
+
+ <button data-page="history">Historique</button>
+
+</nav>
+
+<main>
+
+<section class="page active" id="home">
+
+ <div class="tag">SYSTEM ONLINE</div>
+
+ <h2>Command Center</h2>
+
+ <p>Bienvenue dans ton espace de cybersécurité éducatif.</p>
+
+ <div class="grid">
+
+  <div class="stat"><strong>11</strong>Modules</div>
+
+  <div class="stat"><strong>LOCAL</strong>Mode sécurisé</div>
+
+  <div class="stat"><strong>PRO</strong>Black Edition</div>
+
+ </div>
+
+ <div class="card">
+
+  <h3>Bienvenue, opérateur.</h3>
+
+  <p>Explore les outils, apprends les bases du réseau, de la cryptographie et de la sécurité informatique.</p>
+
+  <p>Certains outils nécessitent une connexion Internet. Les analyses réseau sont limitées aux informations publiques.</p>
+
+ </div>
+
+ <div class="card">
+
+  <h3>Raccourcis</h3>
+
+  <button class="action" onclick="go('dns')">Analyse DNS</button>
+
+  <button class="action" onclick="go('password')">Password Lab</button>
+
+  <button class="action" onclick="go('crypto')">Cryptographie</button>
+
+ </div>
+
+</section>
+
+<section class="page" id="terminal">
+
+ <h2>Terminal éducatif</h2>
+
+ <p>Terminal de démonstration : les commandes affichent des explications, elles ne contrôlent pas ton iPhone.</p>
+
+ <input id="cmd" placeholder="Essaie : help">
+
+ <button class="action" onclick="terminal()">Exécuter</button>
+
+ <div class="output" id="termout">GHOSTCORE TERMINAL v1.0
+
+Tape help pour découvrir les commandes.</div>
+
+</section>
+
+<section class="page" id="dns">
+
+ <h2>Network Intelligence</h2>
+
+ <p>Recherche des enregistrements DNS publics d'un domaine.</p>
+
+ <input id="domain" placeholder="exemple.com">
+
+ <button class="action" onclick="dnsLookup()">Lancer l'analyse DNS</button>
+
+ <div class="output" id="dnsout">En attente d'un domaine...</div>
+
+</section>
+
+<section class="page" id="url">
+
+ <h2>URL Intelligence</h2>
+
+ <p>Examine une adresse web et repère quelques indices visibles. Cette analyse ne garantit pas qu'un site est sûr.</p>
+
+ <input id="urlinput" placeholder="https://exemple.com">
+
+ <button class="action" onclick="urlCheck()">Analyser l'URL</button>
+
+ <div class="output" id="urlout"></div>
+
+</section>
+
+<section class="page" id="osint">
+
+ <h2>Passive OSINT</h2>
+
+ <p>OSINT signifie Open Source Intelligence : recherche à partir de sources publiques. Utilise ces recherches uniquement de manière légale et respectueuse.</p>
+
+ <input id="osintdomain" placeholder="exemple.com">
+
+ <button class="action" onclick="osintSearch()">Rechercher des informations publiques</button>
+
+ <div class="card">
+
+  <p>Les recherches s'ouvrent dans un moteur externe. Aucun compte privé ni donnée personnelle n'est ciblé.</p>
+
+ </div>
+
+</section>
+
+<section class="page" id="crypto">
+
+ <h2>Cryptography Lab</h2>
+
+ <div class="card">
+
+  <h3>Encodeur Base64</h3>
+
+  <textarea id="baseinput" placeholder="Ton texte..."></textarea>
+
+  <button class="action" onclick="baseEncode()">Encoder</button>
+
+  <button class="action" onclick="baseDecode()">Décoder</button>
+
+  <div class="output" id="baseout"></div>
+
+ </div>
+
+ <div class="card">
+
+  <h3>Empreinte SHA-256</h3>
+
+  <input id="hashinput" placeholder="Texte à hacher">
+
+  <button class="action" onclick="makeHash()">Calculer SHA-256</button>
+
+  <div class="output" id="hashout"></div>
+
+ </div>
+
+</section>
+
+<section class="page" id="password">
+
+ <h2>Password Lab</h2>
+
+ <p>Teste la robustesse d'un mot de passe fictif. Ne saisis jamais ton vrai mot de passe.</p>
+
+ <input id="passinput" type="text" placeholder="Mot de passe de test">
+
+ <button class="action" onclick="checkPassword()">Analyser</button>
+
+ <button class="action" onclick="generatePassword()">Générer un exemple</button>
+
+ <div class="output" id="passout"></div>
+
+</section>
+
+<section class="page" id="forensics">
+
+ <h2>Digital Forensics</h2>
+
+ <p>Examine un fichier de test. Le fichier reste sur ton appareil ; son empreinte SHA-256 est calculée localement.</p>
+
+ <input type="file" id="fileinput">
+
+ <button class="action" onclick="inspectFile()">Examiner le fichier</button>
+
+ <div class="output" id="fileout"></div>
+
+</section>
+
+<section class="page" id="nfc">
+
+ <h2>NFC / RFID Academy</h2>
+
+ <div class="card">
+
+  <h3>Comprendre le NFC</h3>
+
+  <p>Le NFC permet à deux appareils proches d'échanger de petites quantités d'informations.</p>
+
+  <p>Il existe différents types de tags et de cartes. Un navigateur web sur iPhone ne donne pas accès à toutes les fonctions NFC.</p>
+
+  <p>Cette version est un module pédagogique : elle ne lit pas et ne copie pas les badges d'accès.</p>
+
+ </div>
+
+ <div class="card">
+
+  <h3>À apprendre</h3>
+
+  <p>• NFC et RFID : différences</p>
+
+  <p>• Tags compatibles NDEF</p>
+
+  <p>• Sécurité des communications sans contact</p>
+
+  <p>• Utilisation responsable de ses propres tags</p>
+
+ </div>
+
+</section>
+
+<section class="page" id="lab">
+
+ <h2>Web Security Lab</h2>
+
+ <p>Mini-laboratoire pédagogique. Ces scénarios sont fictifs et ne testent aucun vrai site.</p>
+
+ <div class="card">
+
+  <h3>Scénario 1 : HTTPS</h3>
+
+  <p>Que protège HTTPS pendant la connexion à un site ?</p>
+
+  <button class="action" onclick="answer('HTTPS chiffre la connexion et aide à vérifier l’identité du site grâce à son certificat.')">Voir l'explication</button>
+
+ </div>
+
+ <div class="card">
+
+  <h3>Scénario 2 : mot de passe</h3>
+
+  <p>Pourquoi ne faut-il pas réutiliser le même mot de passe partout ?</p>
+
+  <button class="action" onclick="answer('Si un service est compromis, les autres comptes utilisant le même mot de passe peuvent aussi être en danger.')">Voir l'explication</button>
+
+ </div>
+
+ <div class="output" id="labout"></div>
+
+</section>
+
+<section class="page" id="history">
+
+ <h2>Activity Log</h2>
+
+ <p>Historique des actions réalisées dans cette session.</p>
+
+ <button class="action" onclick="showHistory()">Actualiser</button>
+
+ <button class="action" onclick="clearHistory()">Effacer l'historique</button>
+
+ <div class="output" id="historyout"></div>
+
+</section>
+
+</main>
+
+<footer>GHOSTCORE PRO // BLACK EDITION<br>Educational cybersecurity toolkit</footer>
+
+<script>
+
+const historyItems=[];
+
+function log(s){historyItems.unshift(new Date().toLocaleTimeString()+" — "+s);historyItems.splice(30)}
+
+function go(id){
+
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+
+ document.getElementById(id).classList.add('active');
+
+ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+
+ if(id==='history')showHistory();
+
+ window.scrollTo(0,0);
+
+}
+
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+
+function terminal(){
+
+ let c=document.getElementById('cmd').value.trim().toLowerCase(),r={
+
+ help:"Commandes disponibles : help, about, date, modules, clear",
+
+ about:"GHOSTCORE PRO — suite éducative de cybersécurité.",
+
+ date:new Date().toString(),
+
+ modules:"DNS, URL Intel, OSINT, Crypto, Password Lab, Forensics, NFC Academy, Cyber Lab.",
+
+ clear:"Terminal réinitialisé."
+
+ };
+
+ document.getElementById('termout').textContent=r[c]||"Commande inconnue. Tape help.";
+
+ if(c!=="clear")log("Terminal : "+c);
+
+}
+
+async function dnsLookup(){
+
+ let d=document.getElementById('domain').value.trim(),out=document.getElementById('dnsout');
+
+ if(!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){out.textContent="Entre un nom de domaine valide.";return}
+
+ out.textContent="Recherche DNS en cours...";
+
+ let results=[];
+
+ try{
+
+  for(let type of ['A','AAAA','MX','TXT','NS']){
+
+   let res=await fetch("https://cloudflare-dns.com/dns-query?name="+encodeURIComponent(d)+"&type="+type,{headers:{accept:"application/dns-json"}});
+
+   let data=await res.json();
+
+   results.push(type+": "+(data.Answer||[]).map(x=>x.data).join(", "));
+
+  }
+
+  out.textContent=results.join("\n")+"\n\nSource : DNS public Cloudflare.";
+
+  log("Recherche DNS : "+d);
+
+ }catch(e){out.textContent="Impossible d'obtenir les données. Vérifie ta connexion ou réessaie."}
+
+}
+
+function urlCheck(){
+
+ let v=document.getElementById('urlinput').value.trim(),o=document.getElementById('urlout');
+
+ try{
+
+  let u=new URL(v);
+
+  if(!['http:','https:'].includes(u.protocol))throw Error();
+
+  let flags=[];
+
+  if(u.protocol!=="https:")flags.push("Attention : connexion sans HTTPS.");
+
+  if(u.username||u.password)flags.push("L'URL contient des informations d'identification.");
+
+  if(u.hostname.includes('xn--'))flags.push("Nom de domaine international encodé.");
+
+  o.textContent="Hôte : "+u.hostname+"\nProtocole : "+u.protocol+"\nPort : "+(u.port||"par défaut")+"\nChemin : "+u.pathname+"\n"+(flags.join("\n")||"Aucun indice simple détecté.")+"\n\nCette vérification n'est pas un verdict de sécurité.";
+
+  log("Analyse URL : "+u.hostname);
+
+ }catch(e){o.textContent="Adresse invalide. Ajoute https:// au début."}
+
+}
+
+function osintSearch(){
+
+ let d=document.getElementById('osintdomain').value.trim();
+
+ if(!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)){alert("Entre un domaine valide.");return}
+
+ log("Recherche OSINT publique : "+d);
+
+ window.open("https://www.google.com/search?q="+encodeURIComponent("site:"+d)," _blank");
+
+}
+
+function baseEncode(){
+
+ try{document.getElementById('baseout').textContent=btoa(unescape(encodeURIComponent(document.getElementById('baseinput').value)));log("Encodage Base64")}catch(e){document.getElementById('baseout').textContent="Erreur"}
+
+}
+
+function baseDecode(){
+
+ try{document.getElementById('baseout').textContent=decodeURIComponent(escape(atob(document.getElementById('baseinput').value.trim())));log("Décodage Base64")}catch(e){document.getElementById('baseout').textContent="Texte Base64 invalide"}
+
+}
+
+async function makeHash(){
+
+ let t=document.getElementById('hashinput').value;
+
+ let b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));
+
+ document.getElementById('hashout').textContent=Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+
+ log("Calcul SHA-256");
+
+}
+
+function checkPassword(){
+
+ let p=document.getElementById('passinput').value,s=0;
+
+ if(p.length>=12)s++;if(/[a-z]/.test(p)&&/[A-Z]/.test(p))s++;
+
+ if(/[0-9]/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;
+
+ let labels=["Très faible","Faible","Moyen","Bon","Plus robuste"];
+
+ document.getElementById('passout').textContent="Longueur : "+p.length+"\nÉvaluation indicative : "+(p?labels[s]:"Entre un exemple.");
+
+ log("Test local de mot de passe");
+
+}
+
+function generatePassword(){
+
+ let chars="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
+
+ let a=new Uint32Array(18);crypto.getRandomValues(a);
+
+ let p=Array.from(a,x=>chars[x%chars.length]).join('');
+
+ document.getElementById('passinput').value=p;
+
+ checkPassword();
+
+}
+
+async function inspectFile(){
+
+ let f=document.getElementById('fileinput').files[0],o=document.getElementById('fileout');
+
+ if(!f){o.textContent="Choisis un fichier d'abord.";return}
+
+ try{
+
+  let b=await crypto.subtle.digest('SHA-256',await f.arrayBuffer());
+
+  let hash=Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+
+  o.textContent="Nom : "+f.name+"\nType : "+(f.type||"inconnu")+"\nTaille : "+f.size+" octets\nDernière modification : "+new Date(f.lastModified).toLocaleString()+"\nSHA-256 : "+hash;
+
+  log("Analyse fichier : "+f.name);
+
+ }catch(e){o.textContent="Analyse indisponible dans ce navigateur."}
+
+}
+
+function answer(t){document.getElementById('labout').textContent=t}
+
+function showHistory(){document.getElementById('historyout').textContent=historyItems.join("\n")||"Aucune activité."}
+
+function clearHistory(){historyItems.length=0;showHistory()}
+
+</script>
+
+</body>
+
+</html>
